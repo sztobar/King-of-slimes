@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Block
+  - Enemy
+  - Tilemap
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Player
+  - Collision
+  - PlayerInteractive
+  - Block
+  - BlockInteractive
+  - Enemy
+  - BlockCollider
+  - EnemyCollider
+  - EnemyInteractive
+  - HideInPlay
+  - Platforms
+  - EnemyPassthrough
+  - PlayerRelict
+  - CameraSegment
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Background
+    uniqueID: 1456429349
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Back decorations
+    uniqueID: 4031543105
+    locked: 0
+  - name: Tiles
+    uniqueID: 616424029
+    locked: 0
+  - name: Active
+    uniqueID: 2784060969
+    locked: 0
+  - name: Front decorations
+    uniqueID: 4116142555
+    locked: 0
+  - name: UI
+    uniqueID: 2356127697
+    locked: 0

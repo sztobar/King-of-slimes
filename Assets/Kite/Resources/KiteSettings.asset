@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e2bc10fbef5acf4da87abd0449db4fc, type: 3}
+  m_Name: KiteSettings
+  m_EditorClassIdentifier: 
+  tileSize: 16
+  rightDirX: {fileID: 11400000, guid: adeb33cfa75813f4eb4527f8625dd536, type: 2}
+  leftDirX: {fileID: 11400000, guid: 98290de2b1f324648a9e1b078b5b6dc2, type: 2}
+  upDirY: {fileID: 11400000, guid: 926f6122fa0dd4340bcfc751b066c941, type: 2}
+  downDirY: {fileID: 11400000, guid: 05c68af02faa56b469caaa726cff583b, type: 2}
+  upDir4: {fileID: 11400000, guid: 4decba88724bdeb47af95e20f54af5e4, type: 2}
+  rightDir4: {fileID: 11400000, guid: 331605caeb24b9e42b58e533e7df8a31, type: 2}
+  downDir4: {fileID: 11400000, guid: 8a502e4e0fa342c45bdeb1488ff13b20, type: 2}
+  leftDir4: {fileID: 11400000, guid: decbe66d5837a8e438b81dc554e50c0c, type: 2}
