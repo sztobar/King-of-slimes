@@ -5,31 +5,19 @@ using UnityEngine.InputSystem;
 namespace Kite
 {
   [Serializable]
-  public class ActionPress
+  public class InputActionPress
   {
-    private float pressTime;
-    private bool unscaledTime;
+    public float pressTime = 0.1f;
 
     private float elapsedTimeLeft;
     private bool actionHeld;
     private InputAction action;
 
-    private float DeltaTime => unscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
-
-    public ActionPressState State { get; }
-
-    public ActionPress(float pressTime = 0.1f, bool unscaledTime = false)
-    {
-      this.pressTime = pressTime;
-      this.unscaledTime = unscaledTime;
-      State = new ActionPressState(this);
-    }
-
-    public void Update()
+    public void Update(float dt)
     {
       if (IsPressed())
       {
-        elapsedTimeLeft -= DeltaTime;
+        elapsedTimeLeft -= dt;
       }
     }
 
@@ -40,7 +28,7 @@ namespace Kite
 
     public bool IsPressed() => elapsedTimeLeft > 0;
 
-    public void Cancel()
+    public void Use()
     {
       elapsedTimeLeft = 0;
     }
@@ -59,6 +47,9 @@ namespace Kite
 
     public void RemoveActionListener()
     {
+      if (action == null)
+        return;
+
       action.performed -= OnInputAction;
       action.canceled -= OnInputAction;
     }
@@ -73,7 +64,7 @@ namespace Kite
       else if (context.canceled)
       {
         actionHeld = false;
-        Cancel();
+        Use();
       }
     }
   }

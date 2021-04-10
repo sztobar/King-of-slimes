@@ -54,10 +54,10 @@ namespace KiteEditor
     }
 
     private static readonly GUIContent[] adsrLabels = {
-      new GUIContent("A"),
-      new GUIContent("D"),
-      new GUIContent("S"),
-      new GUIContent("R")
+      new GUIContent("A", "Attack time"),
+      new GUIContent("D", "Decay time"),
+      new GUIContent("S", "Sustain time"),
+      new GUIContent("R", "Release time")
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label) => GetHeight();
@@ -80,7 +80,7 @@ namespace KiteEditor
         Rect timeFieldsRect = rect;
         timeFieldsRect.height = line;
         timeFieldsRect.y = foldoutRect.yMax + space;
-        timeFieldsRect = DrawEnvelopeParameterFields(timeFieldsRect, property, label);
+        timeFieldsRect = DrawEnvelopeTimeFields(timeFieldsRect, property, label);
 
         Rect graphRect = rect;
         graphRect.y = timeFieldsRect.yMax + (3 * space);
@@ -128,7 +128,7 @@ namespace KiteEditor
       EditorGUI.PropertyField(checkboxValueRect, holdSustainProp, GUIContent.none);
     }
 
-    static Rect DrawEnvelopeParameterFields(Rect rect, SerializedProperty prop, GUIContent label)
+    static Rect DrawEnvelopeTimeFields(Rect rect, SerializedProperty prop, GUIContent label)
     {
       EditorGUI.LabelField(rect, new GUIContent("Time"));
 

@@ -2,7 +2,7 @@
 
 namespace Kite {
 
-  [ExecuteInEditMode]
+  [ExecuteAlways]
   public class HorizontalFlipComponent : MonoBehaviour {
 
     public Direction2H Direction {

@@ -12,6 +12,8 @@ namespace Kite
 
     public T Head => states.Peek();
 
+    public bool IsHead(T state) => Head == state;
+
     public void PushState(T state)
     {
       if (debug)
