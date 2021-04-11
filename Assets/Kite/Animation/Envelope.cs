@@ -51,7 +51,25 @@ namespace Kite
           elapsedTime = releaseTime * normalizedTime;
           currentPhaseAmount = releaseCurve.Evaluate(normalizedTime);
           break;
+        case EnvelopePhase.None:
+        default:
+          elapsedTime = 0;
+          currentPhaseAmount = 0;
+          break;
       }
+    }
+
+    public float GetNormalizedTime()
+    {
+      float totalTime = attackTime + decayTime + sustainTime + releaseTime;
+      return phase switch
+      {
+        EnvelopePhase.Attack => elapsedTime / totalTime,
+        EnvelopePhase.Decay => (elapsedTime + attackTime) / totalTime,
+        EnvelopePhase.Sustain => (elapsedTime + attackTime + decayTime) / totalTime,
+        EnvelopePhase.Release => (elapsedTime + attackTime + decayTime + sustainTime) / totalTime,
+        _ => 0,
+      };
     }
 
     public void Start()

@@ -86,8 +86,9 @@ crashlytics-build.properties
 
 # Include only the source code
 /[Aa]ssets/*
-!/[Aa]ssets/*.cs
-!/[Aa]ssets/*.asmdef
+!/[Aa]ssets/Scripts
+!/[Aa]ssets/**/*.cs
+!/[Aa]ssets/**/*.asmdef
 
 # Valuable text assets:
 !/[Aa]ssets/*.inputactions

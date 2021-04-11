@@ -18,15 +18,20 @@ namespace Kite
     {
       if (debug)
         Debug.Log($"[StackFSM] PushState {state}");
-      Head.StatePause();
-      states.Push(state);
-      state.StateStart();
+
+      if (!IsHead(state))
+      {
+        Head.StatePause();
+        states.Push(state);
+        state.StateStart();
+      }
     }
 
     public void PopState()
     {
       if (debug)
         Debug.Log($"[StackFSM] PopState {states.Peek()}");
+
       states.Pop().StateExit();
       Head.StateResume();
     }
@@ -35,6 +40,7 @@ namespace Kite
     {
       if (debug)
         Debug.Log($"[StackFSM] SetState {state}");
+
       if (states.Count > 0)
       {
         states.Pop().StateExit();

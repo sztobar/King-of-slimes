@@ -33,4 +33,9 @@ public class InputActionFloat
   {
     value = context.ReadValue<float>();
   }
+
+  public void Reset()
+  {
+    value = 0;
+  }
 }
