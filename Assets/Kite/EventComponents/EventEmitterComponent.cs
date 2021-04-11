@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace Kite
 {
-  public abstract class EventEmitterComponent<TListener, TValue> : MonoBehaviour
+  public class EventEmitterComponent<TListener, TValue> : MonoBehaviour
     where TListener : EventListenerComponent<TValue>
   {
     public List<TListener> listeners = new List<TListener>();
 
-    public void Emit(TValue value)
+    public virtual void Emit(TValue value)
     {
       foreach (var listener in listeners)
       {

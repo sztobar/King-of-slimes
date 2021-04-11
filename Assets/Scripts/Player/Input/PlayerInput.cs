@@ -57,6 +57,7 @@ public class PlayerInput : MonoBehaviour, InputActions.IGameplayActions
   private void RegisterActions()
   {
     inputActions.Gameplay.SetCallbacks(this);
+    movement.Read(inputActions.Gameplay.Movement);
     //movement.AddActionListener(inputActions.Gameplay.Movement);
     //jump.AddActionListener(inputActions.Gameplay.Jump);
     //jumpDown.AddActionListener(inputActions.Gameplay.JumpDown);

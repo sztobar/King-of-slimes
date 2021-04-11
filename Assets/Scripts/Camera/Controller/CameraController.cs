@@ -5,23 +5,34 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-  public GameplayCameraState state;
+  public CameraState state;
   public CameraTransitionManager transition;
 
-  public void SetState(GameplayCameraState newState)
+  public CameraSegment CurrentSegment => state.segment;
+  public event Action OnSegmentChange;
+
+  public void SetState(CameraState newState)
   {
-    if (state.segment && state.segment != newState.segment)
+    bool segmentChanged = false;
+
+    if (!state.segment || state.segment != newState.segment)
     {
-      state.segment.SetCameraInactive();
+      if (state.segment)
+        state.segment.SetCameraInactive();
+
       newState.segment.SetCameraActive();
       newState.segment.SetCameraTarget(newState.target);
       newState.segment.SetCameraPosition(newState.target.position);
+      segmentChanged = true;
     }
     else if (state.target != newState.target)
     {
       newState.segment.SetCameraTarget(newState.target);
     }
     state = newState;
+
+    if (segmentChanged)
+      OnSegmentChange?.Invoke();
   }
 
   public void ResetState()
@@ -35,7 +46,7 @@ public class CameraController : MonoBehaviour
     state.target = null;
   }
 
-  public void TransitionTo(GameplayCameraState newState)
+  public void TransitionTo(CameraState newState)
   {
     transition.TransitionFromTo(state, newState);
     if (!transition.HasTransition())

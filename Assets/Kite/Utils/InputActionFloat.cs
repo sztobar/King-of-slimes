@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 [Serializable]
@@ -37,5 +38,10 @@ public class InputActionFloat
   public void Reset()
   {
     value = 0;
+  }
+
+  public void Read(InputAction inputAction)
+  {
+    value = inputAction.ReadValue<float>();
   }
 }

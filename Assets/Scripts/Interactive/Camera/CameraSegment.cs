@@ -25,6 +25,9 @@ public class CameraSegment : MonoBehaviour
 
   public void SetCameraPosition(Vector3 position)
   {
+    if (!Application.isPlaying)
+      return;
+
     CinemachineVirtualCamera virtualCamera = cam.virtualCam;
     position.z = virtualCamera.transform.position.z;
     virtualCamera.ForceCameraPosition(position, Quaternion.identity);
@@ -33,22 +36,8 @@ public class CameraSegment : MonoBehaviour
   public Vector2 GetCameraPosition()
   {
     CinemachineVirtualCamera vcam = cam.virtualCam;
-    CameraState state = vcam.State;
+    Cinemachine.CameraState state = vcam.State;
     return state.CorrectedPosition;
-  }
-
-  internal void SetCameraPosition(Transform followTarget)
-  {
-    //Vector3 unitPosition = followTarget.position;
-    //Vector3 deltaPosition = unitPosition - cam.virtualCam.transform.position;
-    //cam.virtualCam.OnTargetObjectWarped(followTarget, deltaPosition);
-
-    //bool isvalid = cam.virtualCam.PreviousStateIsValid;
-    //Debug.Log($"virtualCam is valid {isvalid}");
-    //if (isvalid)
-    //{
-    //  cam.virtualCam.PreviousStateIsValid = false;
-    //}
   }
 
   public void SetCameraActive()
@@ -147,9 +136,11 @@ public class CameraSegment : MonoBehaviour
 
     unitsInside.Remove(unit);
     
-    PlayerUnitCamera camera = unit.di.camera;
-    if (camera.CameraSegment == this)
-      camera.CameraSegment = null;
+    // TODO: do we need to assign null here?
+    //PlayerUnitCamera camera = unit.di.camera;
+    //if (camera.CameraSegment == this)
+    //  camera.CameraSegment = null;
+
     //camera.RemoveCameraSegment(this);
   }
 
@@ -168,12 +159,12 @@ public class CameraSegment : MonoBehaviour
 
   internal void SetCameraTarget(Transform followTarget)
   {
-    Transform previousFollow = cam.virtualCam.Follow;
+    //Transform previousFollow = cam.virtualCam.Follow;
     cam.virtualCam.Follow = followTarget;
-    if (Application.isPlaying)
-    {
-      if (previousFollow == null)
-        cam.virtualCam.ForceCameraPosition(cam.virtualCam.transform.position, Quaternion.identity);
-    }
+    //if (Application.isPlaying)
+    //{
+    //  if (previousFollow == null)
+    //    cam.virtualCam.ForceCameraPosition(cam.virtualCam.transform.position, Quaternion.identity);
+    //}
   }
 }

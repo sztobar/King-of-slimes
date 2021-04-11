@@ -4,25 +4,23 @@ using UnityEngine;
 
 public class CameraCatchUpTransition : CameraTransition
 {
-  private static CameraCatchUpTransition instance;
+  public int stayFrames = 1;
+  public float minimalDelta = 0.1f;
 
-  private GameplayCameraState state;
+  private CameraState state;
 
   private Vector2 previousCameraPosition;
   private int stayFramesLeft;
+  private float positionDelta;
 
-  public static CameraCatchUpTransition Create(GameplayCameraState state)
+  public CameraCatchUpTransition Init(CameraState state)
   {
-    if (!instance)
-    {
-      instance = CreateInstance<CameraCatchUpTransition>();
-    }
-    instance.state = state;
-
-    return instance;
+    nextTransition = null;
+    this.state = state;
+    return this;
   }
 
-  public override bool IsFinished() => stayFramesLeft <= 0;
+  public override bool IsFinished() => stayFramesLeft <= 0 || positionDelta < minimalDelta;
 
   public override void TransitionUpdate(float dt)
   {
@@ -32,15 +30,17 @@ public class CameraCatchUpTransition : CameraTransition
     {
       stayFramesLeft--;
     }
+    positionDelta = Vector2.Distance(currentCameraPosition, previousCameraPosition);
     previousCameraPosition = currentCameraPosition;
   }
 
   public override void TransitionStart()
   {
-    instance.stayFramesLeft = 1;
-    instance.previousCameraPosition = Vector2.zero;
+    positionDelta = minimalDelta;
+    stayFramesLeft = stayFrames;
+    previousCameraPosition = Vector2.zero;
     state.segment.cam.virtualCam.Follow = state.target;
   }
 
-  public override GameplayCameraState GetState() => state;
+  public override CameraState GetState() => state;
 }

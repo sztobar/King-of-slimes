@@ -5,6 +5,7 @@ using UnityEngine;
 public class PushBlockPhysicsCollidable : PhysicsCollidable
 {
   public PushBlockPhysics physics;
+  public bool debug;
 
   public override float GetAllowedMoveInto(PhysicsMove move)
   {
@@ -12,7 +13,8 @@ public class PushBlockPhysicsCollidable : PhysicsCollidable
     if (pushEffectable && CanBePushed(pushEffectable, move.dir))
     {
       float allowedMove = physics.movement.GetAllowedMovement(move.collideDistance, move.dir);
-      Debug.Log($"[PushBlock] collideDist: {move.collideDistance}; allowed: {allowedMove}");
+      if (debug)
+        Debug.Log($"[PushBlock] collideDist: {move.collideDistance}; allowed: {allowedMove}");
       return allowedMove;
     }
     //PlayerUnitController player = move.hit.rigidbody.GetComponent<PlayerUnitController>();

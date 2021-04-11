@@ -1,23 +1,21 @@
 ﻿using Kite;
 using UnityEngine;
 
-public class PlayerWallSlideJump : MonoBehaviour, PlayerWallSlideAbility.IInjectable {
-
-  [SerializeField]
+public class PlayerWallSlideJump : MonoBehaviour, PlayerWallSlideAbility.IInjectable
+{
   [Tooltip("Jump normal when player is clicking arrow in wall direction")]
-  private Vector2 wallClimbNormalVelocity = new Vector2(0.25f, 1);
+  public Vector2 wallClimbNormalVelocity = new Vector2(0.25f, 1);
 
-  [SerializeField]
   [Tooltip("Jump normal when player is not clicking any arrow keys")]
-  private Vector2 jumpOffNormalVelocity = new Vector2(0.5f, 1);
+  public Vector2 jumpOffNormalVelocity = new Vector2(0.5f, 1);
 
-  [SerializeField]
   [Tooltip("Jump normal when player is clicking arrow opposite to wall direction")]
-  private Vector2 wallLeapNormalVelocity = new Vector2(1, 1);
+  public Vector2 wallLeapNormalVelocity = new Vector2(1, 1);
 
-  [SerializeField]
   [Tooltip("After jump horizontal movement wont work for time")]
-  private float blockMovementTime = 0.5f;
+  public float blockMovementTime = 0.5f;
+
+  public bool debug;
 
   private WallSlideRaycaster wallSlideRaycaster;
 
@@ -28,7 +26,11 @@ public class PlayerWallSlideJump : MonoBehaviour, PlayerWallSlideAbility.IInject
   private Vector2 JumpWorldVelocity(Vector2 normal) =>
     new Vector2(normal.x * movement.WorldVelocity, normal.y * jump.MaxJumpVelocity);
 
-  public void PerformJump(Direction2H wallSlideDirection, float moveInput) {
+  public void PerformJump(Direction2H wallSlideDirection, float moveInput)
+  {
+    if (debug)
+      Debug.Log("[PlayerWallSlideJump] PerformJump");
+
     Vector2 jumpNormalVelocity = GetJumpNormalVelocity(wallSlideDirection, moveInput);
     Vector2 jumpVelocity = JumpWorldVelocity(jumpNormalVelocity);
 
@@ -36,19 +38,26 @@ public class PlayerWallSlideJump : MonoBehaviour, PlayerWallSlideAbility.IInject
     physics.velocity.Value = jumpVelocity;
   }
 
-  public Vector2 GetJumpNormalVelocity(Direction2H wallSlideDirection, float moveInput) {
+  public Vector2 GetJumpNormalVelocity(Direction2H wallSlideDirection, float moveInput)
+  {
     Vector2 jumpNormalVelocity;
     bool isBetweenWalls = wallSlideRaycaster.IsBetweenWalls();
     Direction2H moveInputDirection = Direction2HHelpers.FromFloat(moveInput);
-    if (moveInput == 0) {
+    if (moveInput == 0)
+    {
       jumpNormalVelocity = jumpOffNormalVelocity;
-    } else if (wallSlideRaycaster.IsTouchingWall(moveInputDirection) || isBetweenWalls) {
+    }
+    else if (wallSlideRaycaster.IsTouchingWall(moveInputDirection) || isBetweenWalls)
+    {
       jumpNormalVelocity = wallClimbNormalVelocity;
-    } else {
+    }
+    else
+    {
       jumpNormalVelocity = wallLeapNormalVelocity;
     }
     float wallSlideXSign = 0;
-    if (!isBetweenWalls) {
+    if (!isBetweenWalls)
+    {
       wallSlideXSign = wallSlideDirection.ToFloat() * -1;
     }
     Vector2 oppositeToWallVector = new Vector2(wallSlideXSign, 1);
@@ -56,7 +65,8 @@ public class PlayerWallSlideJump : MonoBehaviour, PlayerWallSlideAbility.IInject
   }
   public void InactiveAbilityUpdate() { }
 
-  public void Inject(PlayerUnitDI di, WallSlideRaycaster raycaster) {
+  public void Inject(PlayerUnitDI di, WallSlideRaycaster raycaster)
+  {
     wallSlideRaycaster = raycaster;
     physics = di.physics;
     movement = di.abilities.movement;

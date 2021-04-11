@@ -9,6 +9,7 @@ public class PlayerJumpAbility : MonoBehaviour, IPlayerAbility
   public float coyoteJumpTime = 0.1f;
   public bool canDoubleJump = false;
   public float doubleJumpTileMaxHeight = 3f;
+  public bool debug;
 
   private PlayerPhysics physics;
   private PlayerInput input;
@@ -96,7 +97,10 @@ public class PlayerJumpAbility : MonoBehaviour, IPlayerAbility
     }
   }
 
-  public void WallSlideUpdate() { }
+  public void WallSlideUpdate()
+  {
+    doubleJumped = false;
+  }
 
   private void BeforeUpdate(bool isGrounded)
   {
@@ -114,6 +118,8 @@ public class PlayerJumpAbility : MonoBehaviour, IPlayerAbility
 
   private void PerformJump()
   {
+    if (debug)
+      Debug.Log("[PlayerJumpAbility] PerformJump");
     // sound.PlayJump();
     // jumpParticles.Play();
     AudioSingleton.PlaySound(AudioSingleton.Instance.clips.jump);
@@ -131,6 +137,8 @@ public class PlayerJumpAbility : MonoBehaviour, IPlayerAbility
 
   private void PerformDoubleJump()
   {
+    if (debug)
+      Debug.Log("[PlayerJumpAbility] PerformDoubleJump");
     //sound.PlayJump();
     //jumpParticles.Play();
     AudioSingleton.PlaySound(AudioSingleton.Instance.clips.jump);

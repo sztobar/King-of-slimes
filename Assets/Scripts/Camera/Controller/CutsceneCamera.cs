@@ -3,18 +3,18 @@
 public class CutsceneCamera : MonoBehaviour
 {
   public CameraController controller;
-  private GameplayCameraState state;
+  private CameraState state;
   private bool hasTransition;
 
-  public GameplayCameraState GetState() => state;
+  public CameraState GetState() => state;
 
-  public void SetState(GameplayCameraState newState)
+  public void SetState(CameraState newState)
   {
     state = newState;
     controller.SetState(state);
   }
 
-  public void TransitionTo(GameplayCameraState newState)
+  public void TransitionTo(CameraState newState)
   {
     state = newState;
     controller.TransitionTo(state);

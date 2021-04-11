@@ -5,9 +5,10 @@ using System;
 
 public class PlayerUnitCamera : MonoBehaviour, IPlayerUnitComponent
 {
+  public CameraVisible cameraVisible;
+
   private PlayerSelectable selectable;
   private PlayerUnitController controller;
-  //private GameplayCamera gameplayCamera;
   private PlayCamera playCamera;
 
   private CameraSegment segment;
@@ -24,7 +25,7 @@ public class PlayerUnitCamera : MonoBehaviour, IPlayerUnitComponent
     }
   }
 
-  private GameplayCameraState GetCameraState() => new GameplayCameraState
+  private CameraState GetCameraState() => new CameraState
   {
     segment = segment,
     target = controller.transform
@@ -32,11 +33,16 @@ public class PlayerUnitCamera : MonoBehaviour, IPlayerUnitComponent
 
   public void OnUnitSelect()
   {
-    //cameraController.SetFollowUnit(controller, segment);
     if (segment)
     {
-      playCamera.TransitionTo(GetCameraState());
-      //gameplayCamera.TransitionToSegment(segment, controller.transform, fadeIfSegmentChange: true);
+      if (cameraVisible.inSight)
+      {
+        playCamera.SetState(GetCameraState());
+      }
+      else
+      {
+        playCamera.TransitionTo(GetCameraState());
+      }
     }
   }
 
@@ -45,8 +51,6 @@ public class PlayerUnitCamera : MonoBehaviour, IPlayerUnitComponent
     if (selectable.IsSelected)
     {
       playCamera.TransitionTo(GetCameraState());
-      //cameraController.SetFollowUnit(controller, segment);
-      //gameplayCamera.TransitionToSegment(segment, controller.transform, fadeIfSegmentChange: true);
     }
   }
 
@@ -59,8 +63,6 @@ public class PlayerUnitCamera : MonoBehaviour, IPlayerUnitComponent
     if (selectable.IsSelected)
     {
       playCamera.SetState(GetCameraState());
-      //cameraController.SetCurrentSegment(segment);
-      //gameplayCamera.TransitionToSegment(segment, controller.transform, fadeIfSegmentChange: false);
     }
   }
 
@@ -69,6 +71,5 @@ public class PlayerUnitCamera : MonoBehaviour, IPlayerUnitComponent
     controller = di.controller;
     selectable = di.selectable;
     playCamera = GameplayManager.instance.playCamera;
-    //gameplayCamera = GameplayManager.instance.camera;
   }
 }

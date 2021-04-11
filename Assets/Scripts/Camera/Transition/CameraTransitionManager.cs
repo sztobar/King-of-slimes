@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class CameraTransitionManager : MonoBehaviour
 {
+  public CameraFadeTransition fadeTransition;
+  public CameraCatchUpTransition catchUpTransition;
   public CameraTransition currentTransition;
-  private GameplayCameraState lastState;
+  private CameraState lastState;
 
   public void TransitionUpdate(float dt)
   {
@@ -42,11 +44,11 @@ public class CameraTransitionManager : MonoBehaviour
     currentTransition = newTransition;
   }
 
-  public GameplayCameraState GetState() => lastState;
+  public CameraState GetState() => lastState;
 
   public bool HasTransition() => currentTransition;
 
-  public void TransitionFromTo(GameplayCameraState from, GameplayCameraState to)
+  public void TransitionFromTo(CameraState from, CameraState to)
   {
     if (!currentTransition)
     {
@@ -54,7 +56,7 @@ public class CameraTransitionManager : MonoBehaviour
       {
         if (to.target != from.target)
         {
-          currentTransition = CameraCatchUpTransition.Create(to);
+          currentTransition = catchUpTransition.Init(to);
         }
         else
         {
@@ -63,20 +65,20 @@ public class CameraTransitionManager : MonoBehaviour
       }
       else
       {
-        currentTransition = CameraFadeTransition.Create(from, to);
+        currentTransition = fadeTransition.Init(from, to);
       }
     }
     else
     {
-      if (currentTransition is CameraCatchUpTransition cameraCatchUpTransition)
+      if (currentTransition is CameraCatchUpTransition)
       {
         if (from.segment == to.segment)
         {
-          currentTransition = CameraCatchUpTransition.Create(to);
+          currentTransition = catchUpTransition.Init(to);
         }
         else
         {
-          currentTransition = CameraFadeTransition.Create(from, to);
+          currentTransition = fadeTransition.Init(from, to);
         }
       }
       else if (currentTransition is CameraFadeTransition cameraFadeTransition)
@@ -86,11 +88,11 @@ public class CameraTransitionManager : MonoBehaviour
           if (cameraFadeTransition.from == from) // is fading in
           {
             float reverseT = 1 - cameraFadeTransition.t;
-            currentTransition = CameraFadeTransition.Create(from, to, reverseT);
+            currentTransition = fadeTransition.Init(from, to, reverseT);
           }
           if (from.target != to.target)
           {
-            currentTransition.nextTransition = CameraCatchUpTransition.Create(to);
+            currentTransition.nextTransition = catchUpTransition.Init(to);
           }
         }
         else
@@ -98,12 +100,12 @@ public class CameraTransitionManager : MonoBehaviour
           if (cameraFadeTransition.from == from) // is fading in
           {
             float t = cameraFadeTransition.t;
-            currentTransition = CameraFadeTransition.Create(from, to, t);
+            currentTransition = fadeTransition.Init(from, to, t);
           }
           else // fading out
           {
             float reverseT = 1 - cameraFadeTransition.t;
-            currentTransition = CameraFadeTransition.Create(from, to, reverseT);
+            currentTransition = fadeTransition.Init(from, to, reverseT);
           }
         }
       }

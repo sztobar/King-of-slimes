@@ -8,7 +8,7 @@ public class RockbatCameraSegmentCollider : MonoBehaviour, IRockbatComponent
   private Rockbat controller;
 
   private CameraSegment initialCameraSegment;
-  private GameplayCamera playerCamera;
+  private bool removeCameraSegmentListener;
 
   public void Inject(Rockbat rockbat)
   {
@@ -34,15 +34,15 @@ public class RockbatCameraSegmentCollider : MonoBehaviour, IRockbatComponent
     }
     else if (cameraSegment != initialCameraSegment)
     {
-      GameplayCamera gameplayCamera = GameplayManager.instance.camera;
-      if (gameplayCamera.ActiveSegment != initialCameraSegment)
+      CameraController cameraController = GameplayManager.instance.cameraController;
+      if (cameraController.CurrentSegment != initialCameraSegment)
       {
         controller.destroyable.DestroyEnemy();
       }
-      else if (!gameplayCamera)
+      else if (!removeCameraSegmentListener)
       {
-        this.playerCamera = gameplayCamera;
-        gameplayCamera.OnChange += OnActiveCameraChange;
+        removeCameraSegmentListener = true;
+        cameraController.OnSegmentChange += OnActiveCameraChange;
       }
     }
   }
@@ -59,7 +59,10 @@ public class RockbatCameraSegmentCollider : MonoBehaviour, IRockbatComponent
 
   private void OnDisable()
   {
-    if (playerCamera)
-      playerCamera.OnChange -= OnActiveCameraChange;
+    if (removeCameraSegmentListener)
+    {
+      CameraController cameraController = GameplayManager.instance.cameraController;
+      cameraController.OnSegmentChange -= OnActiveCameraChange;
+    }
   }
 }

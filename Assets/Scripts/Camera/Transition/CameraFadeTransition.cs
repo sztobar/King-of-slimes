@@ -4,30 +4,20 @@ using UnityEngine;
 
 public class CameraFadeTransition : CameraTransition
 {
-  private static CameraFadeTransition instance;
-
   public FadeTransition fadeTransition;
 
-  public GameplayCameraState from;
-  public GameplayCameraState to;
+  public CameraState from;
+  public CameraState to;
 
   public float t;
 
-  public static CameraFadeTransition Create(
-    GameplayCameraState from,
-    GameplayCameraState to,
-    float t = 0f)
+  public CameraFadeTransition Init(CameraState from, CameraState to, float t = 0)
   {
-    if (!instance)
-    {
-      instance = CreateInstance<CameraFadeTransition>();
-      instance.fadeTransition = GameplayManager.instance.fadeTransition;
-    }
-    instance.from = from;
-    instance.to = to;
-    instance.t = t;
-
-    return instance;
+    nextTransition = null;
+    this.from = from;
+    this.to = to;
+    this.t = t;
+    return this;
   }
 
   public override bool IsFinished() => t >= 1;
@@ -35,17 +25,12 @@ public class CameraFadeTransition : CameraTransition
   public override void TransitionUpdate(float dt)
   {
     fadeTransition.FadeUpdate(dt);
-    //fadeTransition.TransitionUpdate(dt);
     t = fadeTransition.GetNormalizedTime();
   }
 
   public override void TransitionStart()
   {
     fadeTransition.SetNormalizedTime(t);
-    //if (t < 0.5)
-    //  fadeTransition.SetFadeIn(t * 2);
-    //else
-    //  fadeTransition.SetFadeOut((t - 0.5f) * 2);
   }
 
   public override void TransitionExit()
@@ -53,7 +38,7 @@ public class CameraFadeTransition : CameraTransition
     fadeTransition.ResetFade();
   }
 
-  public override GameplayCameraState GetState()
+  public override CameraState GetState()
   {
     if (t < 0.5)
       return from;

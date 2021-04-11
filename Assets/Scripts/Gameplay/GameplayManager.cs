@@ -17,8 +17,7 @@ public class GameplayManager : MonoBehaviour
   public TutorialUI tutorialUI;
   public TutorialTextAppearSpeed tutorialTextAppearSpeed;
   public PlayCamera playCamera;
-  public new GameplayCamera camera;
-  public GameplayCutsceneCamera cutsceneCamera;
+  public CameraController cameraController;
 
   private void Awake()
   {
@@ -43,11 +42,8 @@ public class GameplayManager : MonoBehaviour
     new IGameplayComponent[]
     {
       player,
-      fadeTransition,
-      camera,
       tutorialUI,
       fsm,
       tutorialTextAppearSpeed,
-      cutsceneCamera
     };
 }

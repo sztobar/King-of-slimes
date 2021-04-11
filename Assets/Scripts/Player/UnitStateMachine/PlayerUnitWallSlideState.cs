@@ -8,6 +8,7 @@ public class PlayerUnitWallSlideState : MonoBehaviour, IPlayerUnitState {
   private float wallSlideYTileVelocity = 5;
 
   private PlayerWallSlideAbility wallSlide;
+  private PlayerJumpAbility jump;
   private PlayerPhysics physics;
   private PlayerUnitStateMachine stateMachine;
   private PlayerSelectUnitAbility selectUnit;
@@ -26,6 +27,7 @@ public class PlayerUnitWallSlideState : MonoBehaviour, IPlayerUnitState {
       physics.velocity.Y = -wallSlideYVelocity;
     }
     wallSlide.WallSlideUpdate();
+    jump.WallSlideUpdate();
     physics.WalSlideUpdate();
   }
 
@@ -34,6 +36,7 @@ public class PlayerUnitWallSlideState : MonoBehaviour, IPlayerUnitState {
     stateMachine = di.stateMachine;
     selectUnit = di.abilities.selectUnit;
     wallSlide = di.abilities.wallSlide;
+    jump = di.abilities.jump;
     physics = di.physics;
   }
 
