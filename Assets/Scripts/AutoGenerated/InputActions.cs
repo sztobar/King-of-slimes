@@ -538,7 +538,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""Space & Down"",
+                    ""name"": ""Space"",
                     ""id"": ""c5d5ff97-9bf7-4579-a1dd-6d7b3846587c"",
                     ""path"": ""ButtonWithOneModifier"",
                     ""interactions"": """",
@@ -552,6 +552,17 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""name"": ""modifier"",
                     ""id"": ""fa7511cc-5328-429c-98fb-aacaebc96437"",
                     ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""JumpDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""9ceeb0a6-ac88-4fa1-b80b-e28d0786598c"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -596,39 +607,6 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""name"": ""button"",
                     ""id"": ""11b946ee-8bf9-4806-9d36-6bfd2ece8382"",
                     ""path"": ""<Keyboard>/x"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""JumpDown"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""W & S"",
-                    ""id"": ""280fc663-453b-423b-b042-009fbeb02e9a"",
-                    ""path"": ""ButtonWithOneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""JumpDown"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""modifier"",
-                    ""id"": ""343f5848-69de-4ac8-8ce3-20029ecbee44"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""JumpDown"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""button"",
-                    ""id"": ""04b6e2f0-e224-4ba1-997b-3cf29dccb624"",
-                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
